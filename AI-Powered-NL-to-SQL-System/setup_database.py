@@ -1,4 +1,3 @@
-
 # using faker library to generate random data for patients
 # Sqlite3 to create database and tables, and insert data into them
 # random library to generate random data for doctors, appointments, treatments, and invoices
@@ -8,9 +7,11 @@ import random
 from faker import Faker
 from datetime import datetime, timedelta
 
-fake = Faker()
 
-DB_NAME = "clinic.db"
+fake = Faker()
+import os
+DB_NAME = os.path.join(os.path.dirname(__file__), "clinic.db")
+
 
 def create_tables(conn):
     cursor = conn.cursor()
@@ -78,17 +79,7 @@ def create_tables(conn):
     conn.commit()
 
 
-# Inserting Dummy Data
-# 15 doctors across 5 specializations (Dermatology, Cardiology, Orthopedics, General, Pediatrics) 
-
-# 200 patients with realistic names, spread across 8–10 cities 
-
-# 500 appointments over the past 12 months, with varied statuses 
-
-# 350 treatments linked to completed appointments 
-
-# 300 invoices with a mix of Paid, Pending, and Overdue statuses 
-
+# Insert Doctors
 def insert_doctors(conn):
     cursor = conn.cursor()
 
@@ -116,6 +107,7 @@ def insert_doctors(conn):
     return len(doctors)
 
 
+# Insert Patients
 def insert_patients(conn):
     cursor = conn.cursor()
 
@@ -143,6 +135,8 @@ def insert_patients(conn):
     return len(patients)
 
 
+
+# Insert Appointments
 def insert_appointments(conn):
     cursor = conn.cursor()
 
@@ -167,6 +161,7 @@ def insert_appointments(conn):
     return len(appointments)
 
 
+# Insert Treatments
 def insert_treatments(conn):
     cursor = conn.cursor()
 
@@ -186,6 +181,7 @@ def insert_treatments(conn):
 
     conn.commit()
     return len(treatments)
+
 
 
 def insert_invoices(conn):
@@ -217,6 +213,8 @@ def insert_invoices(conn):
     return len(invoices)
 
 
+
+# MAIN FUNCTION
 def main():
     conn = sqlite3.connect(DB_NAME)
 
